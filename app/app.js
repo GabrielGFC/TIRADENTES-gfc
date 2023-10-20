@@ -7,7 +7,7 @@ const sequelize = require('./config/database');
 const app = express();
 
 app.use(express.json());
-app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: false }));
+app.use(session({ secret: 'coxinha', resave: false, saveUninitialized: false }));
 
 app.use('/auth', authRoutes);
 app.use('/user',userRoutes);

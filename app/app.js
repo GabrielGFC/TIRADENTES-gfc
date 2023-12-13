@@ -24,7 +24,7 @@ saveUninitialized: false }));
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/estoque',isAuthenticated, estoqueRoutes);
-app.use('/item', itemRoutes);
+app.use('/item',isAuthenticated, itemRoutes);
 
 
 sequelize

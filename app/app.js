@@ -3,6 +3,7 @@ const session = require('express-session');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const estoqueRoutes = require('./routes/estoqueRoutes');
+const itemRoutes = require('./routes/itemRoutes')
 const sequelize = require('./config/database');
 const isAuthenticated = require('./middlewares/authenticationMiddleware')
 const cors = require('cors');
@@ -23,6 +24,7 @@ saveUninitialized: false }));
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/estoque',isAuthenticated, estoqueRoutes);
+app.use('/item', itemRoutes);
 
 
 sequelize

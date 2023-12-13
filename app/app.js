@@ -4,15 +4,25 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const estoqueRoutes = require('./routes/estoqueRoutes');
 const sequelize = require('./config/database');
+const isAuthenticated = require('./middlewares/authenticationMiddleware')
+const cors = require('cors');
 
 const app = express();
 
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+}));
+
 app.use(express.json());
-app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: false }));
+app.use(session({ secret: 'your-secret-key',
+resave: false,
+saveUninitialized: false }));
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
-app.use('/estoque', estoqueRoutes);
+app.use('/estoque',isAuthenticated, estoqueRoutes);
 
 
 sequelize

@@ -15,7 +15,8 @@ exports.get = async (req, res) => {
 };
 //post
 exports.register = async (req, res) => {
-  const { 
+  const {
+    id,
     matricula,
     senha,
     email,
@@ -25,35 +26,38 @@ exports.register = async (req, res) => {
   } = req.body;
 
   try {
+
     let 
     hashedSenha
     matriculaStr = matricula.toString()
     periodoStr = periodo.toString()
+
   if (matricula && matriculaStr.length == 7)
-    {}
-  else {return res.status(401).json({ message: 'Invalid or unfilled matricula', matricula });}
+  {}
+  else {return res.status(401).json({ message: 'Matrícula não preenchida ou inválida' });}
   
   if(senha && senha.length > 1 && senha.length < 128)
-    {hashedSenha = bcrypt.hashSync(senha, salt);}
-  else {return res.status(401).json({ message: 'Invalid or unfilled password'});;}
+  {hashedSenha = bcrypt.hashSync(senha, salt);}
+  else {return res.status(401).json({ message: 'Senha não preenchida ou inválida'});;}
   
   if (email && email.length > 1 && email.length < 128)
-    {}
-  else {return res.status(401).json({ message: 'Invalid or unfilled email' });}
+  {}
+  else {return res.status(401).json({ message: 'E-mail não preenchido ou inválido' });}
   
   if (nome && nome.length > 1 && nome.length < 128)
-    {}
-  else {return res.status(401).json({ message: 'Invalid or unfilled nome' });}
-
-  if (periodo && periodoStr.length < 2 )
   {}
-  else {return res.status(401).json({ message: 'Invalid or unfilled periodo' });}
+  else {return res.status(401).json({ message: 'Nome não preenchido ou inválido' });}
+
+  if (periodo && periodoStr.length <= 2 )
+  {}
+  else {return res.status(401).json({ message: 'Período não preenchido ou inválido' });}
 
   if (cargo && cargo.length > 1 && cargo.length < 128)
   {}
-  else {return res.status(401).json({ message: 'Invalid or unfilled cargo' });}
+  else {return res.status(401).json({ message: 'Cargo não preenchido ou inválido' });}
   
   await User.create({   
+    id,
     matricula,
     senha: hashedSenha,
     email,
@@ -71,7 +75,7 @@ exports.register = async (req, res) => {
 //put
 exports.update = async (req, res) => {
   const { user_id } = req.params;
-  const { 
+  const {
     matricula,
     senha,
     email,
@@ -81,33 +85,35 @@ exports.update = async (req, res) => {
   } = req.body;
 
   try {let 
-    hashedPassword
+    hashedSenha
+    matriculaStr = matricula.toString()
+    periodoStr = periodo.toString()
 
-    if (matricula && matricula.length == 7)
-    {}
-    else {return res.status(401).json({ message: 'Invalid or unfilled matricula' });}
+  if (matricula && matriculaStr.length == 7)
+  {}
+  else {return res.status(401).json({ message: 'Matrícula não preenchida ou inválida', matricula });}
   
-    if(senha && senha.length > 1 && senha.length < 128)
-    {hashedSenha = bcrypt.hashSync(senha, salt);}
-    else {return res.status(401).json({ message: 'Invalid or unfilled password'});;}
+  if(senha && senha.length > 1 && senha.length < 128)
+  {hashedSenha = bcrypt.hashSync(senha, salt);}
+  else {return res.status(401).json({ message: 'Senha não preenchida ou inválida'});;}
   
-    if (email && email.length > 1 && email.length < 128)
-    {}
-    else {return res.status(401).json({ message: 'Invalid or unfilled email' });}
+  if (email && email.length > 1 && email.length < 128)
+  {}
+  else {return res.status(401).json({ message: 'E-mail não preenchido ou inválido' });}
   
-    if (nome && nome.length > 1 && nome.length < 128)
-    {}
-    else {return res.status(401).json({ message: 'Invalid or unfilled nome' });}
+  if (nome && nome.length > 1 && nome.length < 128)
+  {}
+  else {return res.status(401).json({ message: 'Nome não preenchido ou inválido' });}
 
-    if (periodo && periodo.length < 2 )
-    {}
-    else {return res.status(401).json({ message: 'Invalid or unfilled periodo' });}
+  if (periodo && periodoStr.length < 2 )
+  {}
+  else {return res.status(401).json({ message: 'Período não preenchido ou inválido' });}
 
-    if (cargo && cargo.length > 1 && cargo.length < 128)
-    {}
-    else {return res.status(401).json({ message: 'Invalid or unfilled cargo' });}
+  if (cargo && cargo.length > 1 && cargo.length < 128)
+  {}
+  else {return res.status(401).json({ message: 'Cargo não preenchido ou inválido' });}
 
-    await User.update({ 
+    await User.update({
     matricula,
     senha: hashedSenha,
     email,

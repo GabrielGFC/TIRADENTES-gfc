@@ -2,10 +2,17 @@ const {Sequelize, DataTypes, INTEGER, STRING } = require('sequelize');
 const sequelize = require('../config/database');
 
 const User = sequelize.define('User', {
+
+    // id:{
+    //     type: INTEGER(),
+    //     allowNull: false,
+    //     autoIncrement:true,
+    //     primaryKey: true
+    //     },
+    
     matricula:{
-        type:INTEGER(7), //FORMATO 123.456.789-09
+        type:INTEGER(7),
         allowNull: false,
-        primatyKey:true,
         unique : true,
         validate: {
             isSevenDigits(value) {
@@ -15,6 +22,7 @@ const User = sequelize.define('User', {
             }
         }
     },
+    
     senha:{
         type:STRING(1,128),
         allowNull:false,
@@ -31,10 +39,10 @@ const User = sequelize.define('User', {
         validate: {len:[1,128]}},
 
     periodo:{
-        type:INTEGER(2),
+        type:INTEGER(1,2),
         allowNull:false,
         validate: {
-            istwoDigits(value) {
+            isTwoDigits(value) {
                 if (value.toString().length > 2) {
                     throw new Error('Matricula deve ter no máximo dígitos');
                 }
@@ -42,9 +50,15 @@ const User = sequelize.define('User', {
         }},
     
     cargo:{
-        type:STRING(1,128),
+        type:STRING(1),
         allowNull:false,
-        validate: {len:[1,128]}}
+        validate: {
+            Validating (value) {
+                if (!["1","2","3"].includes(value)) {
+                    throw new Error('Cargo deve ser 1, 2 ou 3')
+                }
+            },len:[1]
+        }}
 });
 
 

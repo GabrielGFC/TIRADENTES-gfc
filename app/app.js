@@ -4,6 +4,8 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const caixaRoutes = require('./routes/caixaRoutes');
 const sequelize = require('./config/database');
+const cargoRoutes = require('./routes/cargoRoutes');
+const familiaRoutes = require('./routes/familiaRoutes.js');
 
 const app = express();
 
@@ -13,7 +15,8 @@ app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: f
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/caixa', caixaRoutes);
-
+app.use(`/cargos`,cargoRoutes);
+app.use(`/familias`,familiaRoutes);
 
 sequelize
   .sync()

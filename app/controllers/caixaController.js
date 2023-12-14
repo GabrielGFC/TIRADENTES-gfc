@@ -1,6 +1,5 @@
 //export da biblioteca
 const Process = require('../models/Caixa');
-const bcrypt = require("bcrypt")
 //get
 exports.get = async (req, res) => {
   try {
@@ -47,7 +46,7 @@ exports.update = async (req, res) => {
     Item,
     QuantidadeIntem,} = req.body;
   try {
-     //const hashedPassword = bcrypt.hashSync(password, 10);
+     
      await Process.update({ 
       Number,
       CaixaType,

@@ -7,12 +7,12 @@ const User = sequelize.define('User', {
     //     type: INTEGER(),
     //     allowNull: false,
     //     autoIncrement:true,
-    //     primaryKey: false},
+    //     primaryKey: true
+    //     },
     
     matricula:{
         type:INTEGER(7),
         allowNull: false,
-        primaryKey:false,
         unique : true,
         validate: {
             isSevenDigits(value) {
@@ -50,9 +50,15 @@ const User = sequelize.define('User', {
         }},
     
     cargo:{
-        type:STRING(1,128),
+        type:STRING(1),
         allowNull:false,
-        validate: {len:[1,128]}}
+        validate: {
+            Validating (value) {
+                if (!["1","2","3"].includes(value)) {
+                    throw new Error('Cargo deve ser 1, 2 ou 3')
+                }
+            },len:[1]
+        }}
 });
 
 

@@ -16,7 +16,6 @@ exports.get = async (req, res) => {
 //post
 exports.register = async (req, res) => {
   const {
-    id,
     matricula,
     senha,
     email,
@@ -52,12 +51,11 @@ exports.register = async (req, res) => {
   {}
   else {return res.status(401).json({ message: 'Período não preenchido ou inválido' });}
 
-  if (cargo && cargo.length > 1 && cargo.length < 128)
+  if (cargo && cargo.length == 1)
   {}
   else {return res.status(401).json({ message: 'Cargo não preenchido ou inválido' });}
   
   await User.create({   
-    id,
     matricula,
     senha: hashedSenha,
     email,

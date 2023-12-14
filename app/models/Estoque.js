@@ -12,7 +12,6 @@ const Estoque = sequelize.define('Estoque', {
     numeroCaixa:{
         type:INTEGER(1,3), 
         allowNull: false,
-        primaryKey:false,
         unique : true,
         validate: {
             isThreeDigits(value) {

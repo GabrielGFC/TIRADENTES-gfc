@@ -113,7 +113,7 @@ exports.update = async (req, res) => {
   {}
   else {return res.status(401).json({ message: 'Família não preenchida ou inválida' });}
 
-  if (colaborador && colaborador.length > 1 && colaborador.length < 128)
+  if (colaborador && colaborador.length >= 1 && colaborador.length < 128)
   {}
   else {return res.status(401).json({ message: 'Colaborador não preenchido ou inválido' });}
 

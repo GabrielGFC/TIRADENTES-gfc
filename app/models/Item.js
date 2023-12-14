@@ -4,10 +4,10 @@ const sequelize = require('../config/database');
 const Item = sequelize.define('Item', {
 
     // id:{
-    //     type: INTEGER(),
+    //     type: DataTypes.INTEGER,
     //     allowNull: false,
     //     autoIncrement:true,
-    //     primaryKey: false},
+    //     primaryKey: true},
         
     nome:{
         type:STRING(1,128),

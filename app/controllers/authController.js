@@ -2,11 +2,11 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 exports.login = async (req, res) => {
-    const { cpf, password } = req.body;
+    const { matricula, senha } = req.body;
     try {
-        const user = await User.findOne({ where: { cpf } });
-        if (!user || !bcrypt.compareSync(password, user.password)) {
-            return res.status(401).json({ message: 'Invalid CPF or password' });
+        const user = await User.findOne({ where: { matricula } });
+        if (!user || !bcrypt.compareSync(senha, user.senha)) {
+            return res.status(401).json({ message: 'Invalid CPF or senha' });
         }
         req.session.user = user;
         res.status(200).json({ message: 'Login successful' });

@@ -1,88 +1,51 @@
 const {Sequelize, DataTypes, INTEGER, STRING } = require('sequelize');
 const sequelize = require('../config/database');
 
-const User =sequelize.define('User', {
-    cpf:{
-        type:DataTypes.STRING(11), //FORMATO 123.456.789-09
+const User = sequelize.define('User', {
+    matricula:{
+        type:INTEGER(7), //FORMATO 123.456.789-09
         allowNull: false,
         primatyKey:true,
         unique : true,
+        validate: {
+            isSevenDigits(value) {
+                if (value.toString().length !== 7) {
+                    throw new Error('Matricula deve ter 7 dígitos');
+                }
+            }
+        }
     },
-    password:{
-        type:STRING(255),
+    senha:{
+        type:STRING(1,128),
         allowNull:false,
-    },
-    nameComplete:{
-        type:STRING(15),
-        allowNull:false,
-    },
-    rg:{
-        type:INTEGER(14),
-        allowNull:false,
-        unique:true,
-    },
-    telefone:{
-        type:INTEGER(20),
-        allowNull:false,
-    },
-    dataNascimento:{
-        type:DataTypes.STRING(10),
-        allowNull:false,
-    },
-    profissao:{
-        type:STRING(255),
-    },
-    estadoCivil:{
-        type:STRING(20),
-        allowNull:false,
-    },
-    sexo:{
-        type:STRING(20),
-        allowNull:false,
-    },
+        validate: {len:[1,128]}},
+        
     email:{
-        type:STRING(255),
+        type:STRING(1,128),
         allowNull:false,
-    },
-    mae:{
-        type:STRING(255),
+        validate: {len:[1,128]}},
+
+    nome:{
+        type:STRING(1,128),
         allowNull:false,
-    },
-    pai:{
-        type:STRING(255),
+        validate: {len:[1,128]}},
+
+    periodo:{
+        type:INTEGER(2),
         allowNull:false,
-    },
-    paisOrigem:{
-        type:STRING(255),
+        validate: {
+            istwoDigits(value) {
+                if (value.toString().length > 2) {
+                    throw new Error('Matricula deve ter no máximo dígitos');
+                }
+            }
+        }},
+    
+    cargo:{
+        type:STRING(1,128),
         allowNull:false,
-    },
-    cep:{
-        type:DataTypes.STRING(9),
-        allowNull:false,
-    },
-    logradouro:{
-        type:STRING(255),
-        allowNull:false,
-    },
-    numero:{
-        type:INTEGER(20),
-        allowNull:false,
-    },
-    complemento:{
-        type:STRING(255),
-    },
-    bairro:{
-        type:STRING(255),
-        allowNull:false,
-    },
-    cidade:{
-        type:STRING(255),
-        allowNull:false,
-    },
-    estado:{
-        type:STRING(50),
-        allowNull:false,
-    },
+        validate: {len:[1,128]}}
 });
+
 
 module.exports = User;

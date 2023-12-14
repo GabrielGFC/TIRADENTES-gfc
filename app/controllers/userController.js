@@ -1,6 +1,8 @@
 //export da biblioteca
 const User = require('../models/User');
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+const salt = bcrypt.genSaltSync(saltRounds);
 //get
 exports.get = async (req, res) => {
   try {
@@ -14,130 +16,114 @@ exports.get = async (req, res) => {
 //post
 exports.register = async (req, res) => {
   const { 
-    cpf,
-     password, 
-     nameComplete, 
-     rg, 
-     telefone, 
-     dataNascimento, 
-     profissao,estadoCivil, 
-     sexo, 
-     email, 
-     mae, 
-     pai, 
-     paisOrigem, 
-     cep, 
-     logradouro, 
-     numero, 
-     complemento, 
-     bairro, 
-     cidade, 
-     estado 
-    } = req.body;
+    matricula,
+    senha,
+    email,
+    nome,
+    periodo,
+    cargo  
+  } = req.body;
 
   try {
-      const hashedPassword = bcrypt.hashSync(password, 10);
-      const hashedcep = bcrypt.hashSync(cep, 10);
-      const hashedlogradouro = bcrypt.hashSync(logradouro, 10);
-      const hashednumero = bcrypt.hashSync(numero, 10);
-      const hashedcomplemento = bcrypt.hashSync(complemento, 10);
-      const hashedbairro = bcrypt.hashSync(bairro, 10);
-      const hashedcidade = bcrypt.hashSync(cidade, 10);
-      const hashedestado = bcrypt.hashSync(estado, 10);
-      await User.create({ 
-        cpf, 
-        password: hashedPassword, 
-        nameComplete, 
-        rg,
-        telefone,
-        dataNascimento, 
-        profissao,
-        estadoCivil,
-        sexo, 
-        email, 
-        mae, 
-        pai, 
-        paisOrigem, 
-        cep: hashedcep,
-        logradouro: hashedlogradouro, 
-        numero: hashednumero, 
-        complemento: hashedcomplemento, 
-        bairro: hashedbairro, 
-        cidade: hashedcidade, 
-        estado : hashedestado
-      });
-      res.status(201).json({ message: 'User registered successfully' });
+    let 
+    hashedSenha
+    matriculaStr = matricula.toString()
+    periodoStr = periodo.toString()
+  if (matricula && matriculaStr.length == 7)
+    {}
+  else {return res.status(401).json({ message: 'Invalid or unfilled matricula', matricula });}
+  
+  if(senha && senha.length > 1 && senha.length < 128)
+    {hashedSenha = bcrypt.hashSync(senha, salt);}
+  else {return res.status(401).json({ message: 'Invalid or unfilled password'});;}
+  
+  if (email && email.length > 1 && email.length < 128)
+    {}
+  else {return res.status(401).json({ message: 'Invalid or unfilled email' });}
+  
+  if (nome && nome.length > 1 && nome.length < 128)
+    {}
+  else {return res.status(401).json({ message: 'Invalid or unfilled nome' });}
+
+  if (periodo && periodoStr.length < 2 )
+  {}
+  else {return res.status(401).json({ message: 'Invalid or unfilled periodo' });}
+
+  if (cargo && cargo.length > 1 && cargo.length < 128)
+  {}
+  else {return res.status(401).json({ message: 'Invalid or unfilled cargo' });}
+  
+  await User.create({   
+    matricula,
+    senha: hashedSenha,
+    email,
+    nome,
+    periodo,
+    cargo,
+    });
+    res.status(201).json({ message: 'User register successfully'});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+//put
+exports.update = async (req, res) => {
+  const { user_id } = req.params;
+  const { 
+    matricula,
+    senha,
+    email,
+    nome,
+    periodo,
+    cargo  
+  } = req.body;
+
+  try {let 
+    hashedPassword
+
+    if (matricula && matricula.length == 7)
+    {}
+    else {return res.status(401).json({ message: 'Invalid or unfilled matricula' });}
+  
+    if(senha && senha.length > 1 && senha.length < 128)
+    {hashedSenha = bcrypt.hashSync(senha, salt);}
+    else {return res.status(401).json({ message: 'Invalid or unfilled password'});;}
+  
+    if (email && email.length > 1 && email.length < 128)
+    {}
+    else {return res.status(401).json({ message: 'Invalid or unfilled email' });}
+  
+    if (nome && nome.length > 1 && nome.length < 128)
+    {}
+    else {return res.status(401).json({ message: 'Invalid or unfilled nome' });}
+
+    if (periodo && periodo.length < 2 )
+    {}
+    else {return res.status(401).json({ message: 'Invalid or unfilled periodo' });}
+
+    if (cargo && cargo.length > 1 && cargo.length < 128)
+    {}
+    else {return res.status(401).json({ message: 'Invalid or unfilled cargo' });}
+
+    await User.update({ 
+    matricula,
+    senha: hashedSenha,
+    email,
+    nome,
+    periodo,
+    cargo,
+    },
+  
+    { where: { id: user_id } });
+    res.status(200).json({ message: 'User updated successfully' });
+
   } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
   }
 };
-//put
-exports.update = async (req, res) => {
-  const { user_id } = req.params;
-  const { 
-     cpf, 
-     password, 
-     nameComplete, 
-     rg, 
-     telefone, 
-     dataNascimento, 
-     profissao, 
-     estadoCivil, 
-     sexo, 
-     email, 
-     mae, 
-     pai, 
-     paisOrigem, 
-     cep, 
-     logradouro, 
-     numero, 
-     complemento, 
-     bairro, 
-     cidade, 
-     estado 
-    } = req.body;
-
-  try {
-      const hashedPassword = bcrypt.hashSync(password, 10);
-      const hashedcep = bcrypt.hashSync(cep, 10);
-      const hashedlogradouro = bcrypt.hashSync(logradouro, 10);
-      const hashednumero = bcrypt.hashSync(numero, 10);
-      const hashedcomplemento = bcrypt.hashSync(complemento, 10);
-      const hashedbairro = bcrypt.hashSync(bairro, 10);
-      const hashedcidade = bcrypt.hashSync(cidade, 10);
-      const hashedestado = bcrypt.hashSync(estado, 10)
-      await User.update({ 
-        cpf, 
-        password: hashedPassword, 
-        nameComplete, 
-        rg,
-        telefone,
-        dataNascimento, 
-        profissao,
-        estadoCivil,
-        sexo, 
-        email, 
-        mae, 
-        pai, 
-        paisOrigem, 
-        cep: hashedcep,
-        logradouro: hashedlogradouro, 
-        numero: hashednumero, 
-        complemento: hashedcomplemento, 
-        bairro: hashedbairro, 
-        cidade: hashedcidade, 
-        estado : hashedestado
-        },
-        { where: { id: user_id } 
-  });
-    res.status(200).json({ message: 'User updated successfully' });
-      } 
-      catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-}
 
 //delete
 exports.delete = async (req, res) => {

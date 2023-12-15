@@ -1,12 +1,16 @@
 //export da biblioteca
 const Caixa = require('../models/Caixa');
+const Familia = require('../models/Familia');
+const Item = require('../models/Item');
 //get
 exports.get = async (req, res) => {
   try {
-    const caixa = await Caixa.findAll([
+    const caixa = await Caixa.findAll({
+      include: [
       { model: Familia, attributes: ['nome', 'descricao'] },
-      { model: Item, attributes: ['nome', 'quantidade', 'descricao'] }
-    ]);
+      { model: Item, attributes: ['nome', 'quantidade', 'descricao'] }]
+    }
+    );
     res.json(caixa);
   } catch (error) {
     console.error(error);
@@ -19,7 +23,7 @@ exports.register = async (req, res) => {
     Number,
     idItem,
     idFamilia,
-    idColaborador
+    //idColaborador
     } = req.body;
     try {
       let NumberStr = Number.toString()
@@ -32,7 +36,7 @@ exports.register = async (req, res) => {
     Number,
     idItem,
     idFamilia,
-    idColaborador
+    //idColaborador
 });
         res.status(201).json({ message: 'Cargo register successfully' });
     } catch (error) {

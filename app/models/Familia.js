@@ -5,7 +5,6 @@ const Familia = sequelize.define('Familia', {
     nome: {
         type: STRING(1,128),
         allowNull: true,
-        primaryKey: true,
         unique: true,
     },
     descricao: {

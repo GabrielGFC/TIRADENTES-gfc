@@ -33,19 +33,22 @@ const Estoque = sequelize.define('Estoque', {
             }
         }},
         
-    dataEntrada:{
-        type:DataTypes.DATE,
-        allowNull:false,
-        validate: {isDate: true}},
+    // dataEntrada:{
+    //     type:DataTypes.DATE,
+    //     allowNull:false,
+    //     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+    //     validate: {isDate: true}},
 
-    dataMovimentacao:{
-        type:DataTypes.DATE,
-        allowNull:false,
-        validate: {isDate: true}},
+    // dataMovimentacao:{
+    //     type:DataTypes.DATE,
+    //     allowNull:false,
+    //     defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+    //     validate: {isDate: true}},
     
     dataSaida:{
         type:DataTypes.DATE,
         allowNull:false,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
         validate: {isDate: true}},
     
     familia:{
@@ -56,8 +59,23 @@ const Estoque = sequelize.define('Estoque', {
     colaborador:{
         type:STRING(1,128),
         allowNull:false,
-        validate: {len:[1,128]}}
+        validate: {len:[1,128]}},
+
+    },
+    {hooks: {
+    //     beforeCreate: (estoque, options) => {
+    //         // Define a dataEntrada como a data e hora atuais no momento do CREATE
+    //         estoque.dataEntrada = new Date();
+    //         estoque.dataMovimentacao = new Date()
+    //     },
+
+        beforeUpdate: (estoque, options) => {
+            // Define a dataMovimentacao como a data e hora atuais no momento do UPDATE
+            estoque.dataSaida = new Date();
+        }
+        }
 });
+
 
 
 module.exports = Estoque;

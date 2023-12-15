@@ -23,7 +23,7 @@ saveUninitialized: false }));
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
-app.use('/estoque',isAuthenticated, estoqueRoutes);
+app.use('/estoque', estoqueRoutes);
 app.use('/item',isAuthenticated, itemRoutes);
 
 

@@ -19,7 +19,7 @@ const Caixa =sequelize.define('Caixa', {
     },
 })
 
-Caixa.belongsTo(Familia,{
+Familia.hasMany(Caixa,{
     constraints: true,
     foreignKey: 'idFamilia'
 }),
@@ -28,7 +28,6 @@ Caixa.belongsTo(Item,{
     constraints: true,
     foreignKey: 'idItem'
 })
-
 
 
 

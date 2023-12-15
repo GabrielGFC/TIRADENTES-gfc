@@ -5,10 +5,11 @@ const Item = require('./Item');
 
 const Caixa =sequelize.define('Caixa', {
  
-    Number:{
+    idCaixa:{
         type: INTEGER(3),//Formato xxx
         allowNull:false,
         unique : true,
+        primaryKey: true,
         validate:{
             isThreeDigits(value) {
                 if (value.toString().length > 3) {
@@ -19,15 +20,15 @@ const Caixa =sequelize.define('Caixa', {
     },
 })
 
-Familia.hasMany(Caixa,{
-    constraints: true,
-    foreignKey: 'idFamilia'
-}),
-
 Caixa.belongsTo(Item,{
     constraints: true,
     foreignKey: 'idItem'
 })
+
+Familia.hasMany(Caixa,{
+    constraints: true,
+    foreignKey: 'idFamilia'
+}),
 
 
 

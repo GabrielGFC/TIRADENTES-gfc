@@ -1,10 +1,14 @@
 //export da biblioteca
+const Caixa = require('../models/Caixa');
 const Estoque = require('../models/Estoque');
 
 //get
 exports.get = async (req, res) => {
   try {
-    const estoque = await Estoque.findAll();
+    const estoque = await Estoque.findAll({
+      include: 
+      { model: Caixa, attributes: ['id', 'idFamilia', 'idItem'] },
+    });
     res.json(estoque);
   } catch (error) {
     console.error(error);
@@ -14,38 +18,19 @@ exports.get = async (req, res) => {
 //post
 exports.register = async (req, res) => {
   const {
-    numeroCaixa,
-    quantidade,
-    familia,
-    colaborador  
+    id,
   } = req.body;
 
   try {
     let 
-    numeroCaixaStr = numeroCaixa.toString()
-    quantidadeStr = quantidade.toString()
+    idstr = id.toString()
 
-  if (numeroCaixa && numeroCaixaStr.length <= 3)
+  if (id && idstr.length <= 3)
   {}
-  else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido', numeroCaixaStr });}
-  
-  if(quantidade && quantidadeStr.length <= 3)
-  {}
-  else {return res.status(401).json({ message: 'Data de entrada não preenchida ou inválida' });}
-
-  if (familia && familia.length > 1 && familia.length < 128)
-  {}
-  else {return res.status(401).json({ message: 'Família não preenchida ou inválida' });}
-
-  if (colaborador && colaborador.length > 1 && colaborador.length < 128)
-  {}
-  else {return res.status(401).json({ message: 'Colaborador não preenchido ou inválido' });}
+  else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido'});}
   
   await Estoque.create({
-    numeroCaixa,
-    quantidade,
-    familia,
-    colaborador
+    id
     });
     res.status(201).json({ message: 'Estoque register successfully'});
   } catch (error) {
@@ -58,37 +43,18 @@ exports.register = async (req, res) => {
 exports.update = async (req, res) => {
   const { estoque_id } = req.params;
   const { 
-    numeroCaixa,
-    quantidade,
-    familia,
-    colaborador
+   id
   } = req.body;
 
   try {let 
-    numeroCaixaStr = numeroCaixa.toString()
-    quantidadeStr = quantidade.toString()
+    idtr = id.toString()
 
-  if (numeroCaixa && numeroCaixaStr.length <= 3)
+  if (id && idstr.length <= 3)
   {}
-  else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido', numeroCaixaStr });}
-  
-  if(quantidade && quantidadeStr.length <= 3)
-  {}
-  else {return res.status(401).json({ message: 'Quantidade não preenchida ou inválida'});;}
-
-  if (familia && familia.length > 1 && familia.length < 128)
-  {}
-  else {return res.status(401).json({ message: 'Família não preenchida ou inválida' });}
-
-  if (colaborador && colaborador.length >= 1 && colaborador.length < 128)
-  {}
-  else {return res.status(401).json({ message: 'Colaborador não preenchido ou inválido' });}
+  else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido' });}
 
     await Estoque.update({ 
-    numeroCaixa,
-    quantidade,
-    familia,
-    colaborador
+    id
     },
   
     { where: { id: estoque_id } });

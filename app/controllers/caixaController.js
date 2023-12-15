@@ -20,25 +20,25 @@ exports.get = async (req, res) => {
 //post
 exports.register = async (req, res) => {
   const {
-    Number,
+    idCaixa,
     idItem,
     idFamilia,
-    //idColaborador
+    // idColaborador
     } = req.body;
     try {
-      let NumberStr = Number.toString()
+      let idCaixaStr = idCaixa.toString()
 
-  if (Number && NumberStr.length <= 3)
+  if (idCaixa && idCaixaStr.length <= 3)
   {}
-  else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido', numeroCaixaStr });}
+  else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido' });}
   
   await Caixa.create({
-    Number,
+    idCaixa,
     idItem,
     idFamilia,
-    //idColaborador
+    // idColaborador
 });
-        res.status(201).json({ message: 'Cargo register successfully' });
+        res.status(201).json({ message: 'Caixa register successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -48,19 +48,23 @@ exports.register = async (req, res) => {
 exports.update = async (req, res) => {
   const { caixa_id } = req.params;
   const {
-    Number,
-    idItem
+    idCaixa,
+    idItem,
+    idFamilia,
+    // idColaborador
     } = req.body;
   try {
-    let NumberStr = Number.toString()
+    let idCaixaStr = idCaixa.toString()
 
-    if (Number && NumberStr.length <= 3)
+    if (idCaixa && idCaixaStr.length <= 3)
     {}
-    else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido', numeroCaixaStr });}
+    else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido' });}
 
      await Caixa.update({ 
-      Number,
-      idItem
+      idCaixa,
+      idItem,
+      idFamilia,
+      // idColaborador
     }
       , { where: { id:caixa_id} });
       res.status(200).json({ message: 'Caixa updated successfully' });

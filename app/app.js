@@ -4,6 +4,7 @@ const estoqueRoutes = require('./routes/estoqueRoutes');
 const itemRoutes = require('./routes/itemRoutes')
 const sequelize = require('./config/database');
 const cargoRoutes = require('./routes/cargoRoutes');
+const caixaRoutes = require('./routes/caixaRoutes');
 const familiaRoutes = require('./routes/familiaRoutes.js');
 const isAuthenticated = require('./middlewares/authenticationMiddleware')
 const express = require('express');
@@ -25,11 +26,11 @@ saveUninitialized: false }));
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
-app.use('/estoque',isAuthenticated, estoqueRoutes);
-app.use('/item',isAuthenticated, itemRoutes);
+app.use('/estoque', estoqueRoutes);
+app.use('/item', itemRoutes);
 app.use('/caixa', caixaRoutes);
 app.use(`/cargos`,cargoRoutes);
-app.use(`/familias`,familiaRoutes)
+app.use(`/familia`,familiaRoutes)
 
 
 sequelize

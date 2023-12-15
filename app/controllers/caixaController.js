@@ -1,10 +1,13 @@
 //export da biblioteca
-const Process = require('../models/Caixa');
+const Caixa = require('../models/Caixa');
 //get
 exports.get = async (req, res) => {
   try {
-    const process = await Process.findAll();
-    res.json(process);
+    const caixa = await Caixa.findAll([
+      { model: Familia, attributes: ['nome', 'descricao'] },
+      { model: Item, attributes: ['nome', 'quantidade', 'descricao'] }
+    ]);
+    res.json(caixa);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erro servidor.' });
@@ -14,22 +17,24 @@ exports.get = async (req, res) => {
 exports.register = async (req, res) => {
   const {
     Number,
-    CaixaType,
-    MatriculaColaborador,
-    Colaborador,
-    Item,
-    QuantidadeIntem,
-} = req.body;
+    idItem,
+    idFamilia,
+    idColaborador
+    } = req.body;
     try {
-        await Process.create({
-         Number,
-         CaixaType,
-         MatriculaColaborador,
-         Colaborador,
-         Item,
-         QuantidadeIntem,
-      });
-        res.status(201).json({ message: 'Process register successfully' });
+      let NumberStr = Number.toString()
+
+  if (Number && NumberStr.length <= 3)
+  {}
+  else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido', numeroCaixaStr });}
+  
+  await Caixa.create({
+    Number,
+    idItem,
+    idFamilia,
+    idColaborador
+});
+        res.status(201).json({ message: 'Cargo register successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -40,22 +45,21 @@ exports.update = async (req, res) => {
   const { caixa_id } = req.params;
   const {
     Number,
-    CaixaType,
-    MatriculaColaborador,
-    Colaborador,
-    Item,
-    QuantidadeIntem,} = req.body;
+    idItem
+    } = req.body;
   try {
-     
-     await Process.update({ 
+    let NumberStr = Number.toString()
+
+    if (Number && NumberStr.length <= 3)
+    {}
+    else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido', numeroCaixaStr });}
+
+     await Caixa.update({ 
       Number,
-      CaixaType,
-      MatriculaColaborador,
-      Colaborador,
-      Item,
-      QuantidadeIntem
-     }, { where: { id:caixa_id} });
-      res.status(200).json({ message: 'Process updated successfully' });
+      idItem
+    }
+      , { where: { id:caixa_id} });
+      res.status(200).json({ message: 'Caixa updated successfully' });
   } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
@@ -64,11 +68,10 @@ exports.update = async (req, res) => {
 
 //Delete
 exports.delete = async(req,res) => {
-const {process_id} = req.params;
-const { name, process, processType, estagiario, teacher, beginningDate,
-  tribunal, partesEvolvidas, instâncias, vara, description} = req.body;
-  try { await Process.destroy({ where: { id: process_id } });
-    res.status(202).json({ message: 'Process deleted successfully' });}
+const {caixa_id} = req.params;
+const { } = req.body;
+  try { await Caixa.destroy({ where: { id: caixa_id } });
+    res.status(202).json({ message: 'Caixa deleted successfully' });}
   catch (error) {
       console.error(error);
       res.status(501).json({ message: 'Internal server error' });

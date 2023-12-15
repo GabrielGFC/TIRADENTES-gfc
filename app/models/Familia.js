@@ -1,19 +1,18 @@
 const { Sequelize, DataTypes, STRING } = require('sequelize');
 const sequelize = require('../config/database');
 
-const User = sequelize.define('familia', {
+const Familia = sequelize.define('Familia', {
     nome: {
-        type: STRING(11),
-        allowNull: false,
+        type: STRING(1,128),
+        allowNull: true,
         primaryKey: true,
         unique: true,
     },
     descricao: {
-        type: STRING(11),
-        allowNull: false,
-        primaryKey: true,
-        unique: true,
+        type: STRING(1,128),
+        allowNull: true,
     }
-});
+})
 
-module.exports = User;
+
+module.exports = Familia;

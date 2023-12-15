@@ -49,16 +49,11 @@ const User = sequelize.define('User', {
             }
         }},
     
-    cargo:{
+    idcargo:{
         type:STRING(1),
-        allowNull:false,
-        validate: {
-            Validating (value) {
-                if (!["1","2","3"].includes(value)) {
-                    throw new Error('Cargo deve ser 1, 2 ou 3')
-                }
-            },len:[1]
-        }}
+        allowNull:true,
+        validate: {len:[1]}}
+
 });
 
 

@@ -10,6 +10,8 @@ const isAuthenticated = require('./middlewares/authenticationMiddleware')
 const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
+const registrosIniciais = require('./middlewares/registrosIniciais.js');
+
 
 const app = express();
 
@@ -35,7 +37,10 @@ app.use(`/familia`,familiaRoutes)
 
 sequelize
   .sync()
-  .then(() => {
+  .then(async() => {
+
+    await registrosIniciais();
+
     app.listen(3000, () => {
       console.log('Server is running on port 3000');
     });

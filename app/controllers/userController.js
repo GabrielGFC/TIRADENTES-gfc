@@ -21,7 +21,7 @@ exports.register = async (req, res) => {
     email,
     nome,
     periodo,
-    cargo  
+    idCargo  
   } = req.body;
 
   try {
@@ -51,7 +51,7 @@ exports.register = async (req, res) => {
   {}
   else {return res.status(401).json({ message: 'Período não preenchido ou inválido' });}
 
-  if (cargo && cargo.length == 1)
+  if (idCargo && idCargo.length == 1)
   {}
   else {return res.status(401).json({ message: 'Cargo não preenchido ou inválido' });}
   
@@ -61,7 +61,7 @@ exports.register = async (req, res) => {
     email,
     nome,
     periodo,
-    cargo,
+    idCargo,
     });
     res.status(201).json({ message: 'User register successfully'});
   } catch (error) {
@@ -79,7 +79,7 @@ exports.update = async (req, res) => {
     email,
     nome,
     periodo,
-    cargo  
+    idCargo  
   } = req.body;
 
   try {let 
@@ -107,7 +107,7 @@ exports.update = async (req, res) => {
   {}
   else {return res.status(401).json({ message: 'Período não preenchido ou inválido' });}
 
-  if (cargo && cargo.length > 1 && cargo.length < 128)
+  if (idCargo && idCargo.length > 1 && idCargo.length < 128)
   {}
   else {return res.status(401).json({ message: 'Cargo não preenchido ou inválido' });}
 
@@ -117,7 +117,7 @@ exports.update = async (req, res) => {
     email,
     nome,
     periodo,
-    cargo,
+    idCargo,
     },
   
     { where: { id: user_id } });

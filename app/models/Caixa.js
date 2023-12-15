@@ -7,7 +7,9 @@ const Caixa =sequelize.define('Caixa', {
         type: INTEGER(3),//Formato xxx
         allowNull:false,
         unique : true,
-        validate:{len:[1,3]}
+        validate:{len:[1,3]},
+        primaryKey: true,
+
     },
     //PRECISO DE MAIS INFORMAÇÕES SOBRE O TIPO DE CAIXA
     // familia = caixatype

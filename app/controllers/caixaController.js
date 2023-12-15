@@ -1,10 +1,11 @@
 //export da biblioteca
-const Process = require('../models/Caixa');
+const Caixa = require('../models/Caixa');
+
 //get
 exports.get = async (req, res) => {
   try {
-    const process = await Process.findAll();
-    res.json(process);
+    const Caixa = await Caixa.findAll();
+    res.json(Caixa);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erro servidor.' });
@@ -21,7 +22,7 @@ exports.register = async (req, res) => {
     QuantidadeIntem,
 } = req.body;
     try {
-        await Process.create({
+        await Caixa.create({
          Number,
          CaixaType,
          MatriculaColaborador,
@@ -29,7 +30,7 @@ exports.register = async (req, res) => {
          Item,
          QuantidadeIntem,
       });
-        res.status(201).json({ message: 'Process register successfully' });
+        res.status(201).json({ message: 'Caixa register successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -47,7 +48,7 @@ exports.update = async (req, res) => {
     QuantidadeIntem,} = req.body;
   try {
      
-     await Process.update({ 
+     await Caixa.update({ 
       Number,
       CaixaType,
       MatriculaColaborador,
@@ -55,7 +56,7 @@ exports.update = async (req, res) => {
       Item,
       QuantidadeIntem
      }, { where: { id:caixa_id} });
-      res.status(200).json({ message: 'Process updated successfully' });
+      res.status(200).json({ message: 'Caixa updated successfully' });
   } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
@@ -63,14 +64,13 @@ exports.update = async (req, res) => {
 };
 
 //Delete
-exports.delete = async(req,res) => {
-const {process_id} = req.params;
-const { name, process, processType, estagiario, teacher, beginningDate,
-  tribunal, partesEvolvidas, instâncias, vara, description} = req.body;
-  try { await Process.destroy({ where: { id: process_id } });
-    res.status(202).json({ message: 'Process deleted successfully' });}
-  catch (error) {
+exports.delete = async (req, res) => {
+  const { Number } = req.params;
+    try {
+      await Caixa.destroy({ where: { id: Number } });
+      res.status(202).json({ message: 'Caixa deleted successfully' });
+    } catch (error) {
       console.error(error);
       res.status(501).json({ message: 'Internal server error' });
-  }
-}
+    }
+  }; // Add a closing curly brace here

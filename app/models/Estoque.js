@@ -76,6 +76,6 @@ const Estoque = sequelize.define('Estoque', {
         }
 });
 
-
+// Os comentários listados podem ser utilizados futuramente
 
 module.exports = Estoque;

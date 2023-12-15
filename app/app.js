@@ -1,11 +1,13 @@
-const express = require('express');
-const session = require('express-session');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const estoqueRoutes = require('./routes/estoqueRoutes');
 const itemRoutes = require('./routes/itemRoutes')
 const sequelize = require('./config/database');
+const cargoRoutes = require('./routes/cargoRoutes');
+const familiaRoutes = require('./routes/familiaRoutes.js');
 const isAuthenticated = require('./middlewares/authenticationMiddleware')
+const express = require('express');
+const session = require('express-session');
 const cors = require('cors');
 
 const app = express();
@@ -23,8 +25,11 @@ saveUninitialized: false }));
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
-app.use('/estoque', estoqueRoutes);
+app.use('/estoque',isAuthenticated, estoqueRoutes);
 app.use('/item',isAuthenticated, itemRoutes);
+app.use('/caixa', caixaRoutes);
+app.use(`/cargos`,cargoRoutes);
+app.use(`/familias`,familiaRoutes)
 
 
 sequelize

@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes, STRING } = require('sequelize');
 const sequelize = require('../config/database');
+const Caixa = require('./Caixa');
 
 const Familia = sequelize.define('Familia', {
     nome: {

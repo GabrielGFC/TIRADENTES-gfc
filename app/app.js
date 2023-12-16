@@ -33,7 +33,7 @@ app.use('/estoque', estoqueRoutes);
 app.use('/item', itemRoutes);
 app.use('/caixa', caixaRoutes);
 app.use('/cargo',cargoRoutes);
-app.use('/familias',familiaRoutes)
+app.use('/familia',familiaRoutes)
 app.use('/pedido',pedidoRoutes)
 
 sequelize

@@ -16,9 +16,6 @@ exports.register = async (req, res) => {
   const {
     numeroCaixa,
     quantidade,
-    dataEntrada,
-    dataMovimentacao,
-    dataSaida,
     familia,
     colaborador  
   } = req.body;
@@ -34,19 +31,7 @@ exports.register = async (req, res) => {
   
   if(quantidade && quantidadeStr.length <= 3)
   {}
-  else {return res.status(401).json({ message: 'Quantidade não preenchida ou inválida'});;}
-  
-  if (dataEntrada && dataEntrada.length <= 50)
-  {}
   else {return res.status(401).json({ message: 'Data de entrada não preenchida ou inválida' });}
-  
-  if (dataMovimentacao && dataMovimentacao.length <= 50)
-  {}
-  else {return res.status(401).json({ message: 'Data de movimentação não preenchida ou inválida' });}
-
-  if (dataSaida && dataSaida.length <= 50 )
-  {}
-  else {return res.status(401).json({ message: 'Data de saída não preenchida ou inválida' });}
 
   if (familia && familia.length > 1 && familia.length < 128)
   {}
@@ -59,9 +44,6 @@ exports.register = async (req, res) => {
   await Estoque.create({
     numeroCaixa,
     quantidade,
-    dataEntrada,
-    dataMovimentacao,
-    dataSaida,
     familia,
     colaborador
     });
@@ -78,9 +60,6 @@ exports.update = async (req, res) => {
   const { 
     numeroCaixa,
     quantidade,
-    dataEntrada,
-    dataMovimentacao,
-    dataSaida,
     familia,
     colaborador
   } = req.body;
@@ -96,18 +75,6 @@ exports.update = async (req, res) => {
   if(quantidade && quantidadeStr.length <= 3)
   {}
   else {return res.status(401).json({ message: 'Quantidade não preenchida ou inválida'});;}
-  
-  if (dataEntrada && dataEntrada.length <= 50)
-  {}
-  else {return res.status(401).json({ message: 'Data de entrada não preenchida ou inválida' });}
-  
-  if (dataMovimentacao && dataMovimentacao.length <= 50)
-  {}
-  else {return res.status(401).json({ message: 'Data de movimentação não preenchida ou inválida' });}
-
-  if (dataSaida && dataSaida.length <= 50 )
-  {}
-  else {return res.status(401).json({ message: 'Data de saída não preenchida ou inválida' });}
 
   if (familia && familia.length > 1 && familia.length < 128)
   {}
@@ -120,9 +87,6 @@ exports.update = async (req, res) => {
     await Estoque.update({ 
     numeroCaixa,
     quantidade,
-    dataEntrada,
-    dataMovimentacao,
-    dataSaida,
     familia,
     colaborador
     },

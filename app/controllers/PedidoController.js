@@ -20,16 +20,16 @@ exports.get = async (req, res) => {
 //post
 exports.register = async (req, res) => {
   const {
+    aprovacao,
     idCaixa,
-    matricula,
-    aprovacao
+    matricula
     } = req.body;
     try {
   
   await Pedido.create({
+    aprovacao,
     idCaixa,
-    matricula,
-    aprovacao
+    matricula
 });
         res.status(201).json({ message: 'Pedido register successfully' });
     } catch (error) {
@@ -41,16 +41,17 @@ exports.register = async (req, res) => {
 exports.update = async (req, res) => {
   const { pedido_id } = req.params;
   const {
+    aprovacao,
     idCaixa,
     matricula,
-    aprovacao
+  
     } = req.body;
   try {
 
      await Pedido.update({ 
+      aprovacao,
       idCaixa,
-      matricula,
-      aprovacao
+      matricula
     }
       , { where: { idPedido:pedido_id} });
       res.status(200).json({ message: 'Pedido updated successfully' });

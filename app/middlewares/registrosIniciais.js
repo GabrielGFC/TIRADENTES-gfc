@@ -39,15 +39,15 @@ const registrosIniciais = async () => {
         }
        
         if (!adminLogin) {
-            await User.create({ matricula: 1010101, senha: 'admin', email: 'admin@gmail.com', nome: 'Admin', periodo: 0, idCargo: 1 });
+            await User.create({ matricula: 1010101, senha: 'admin', email: 'admin@gmail.com', nome: 'Admin', periodo: 0, idcargo: 1 });
         }
 
         if (!alunoLogin) {
-            await User.create({ matricula: 7654321, senha: 'aluno', email: 'aluno@gmail.com', nome: 'Aluno', periodo: 1, idCargo: 2 });
+            await User.create({ matricula: 7654321, senha: 'aluno', email: 'aluno@gmail.com', nome: 'Aluno', periodo: 1, idcargo: 2 });
         }
 
         if (!colaboradorLogin) {
-            await User.create({ matricula: 1234567, senha: 'colaborador', email: 'colaborador@gmail.com', nome: 'Colaborador', periodo: 2, idCargo: 3});
+            await User.create({ matricula: 1234567, senha: 'colaborador', email: 'colaborador@gmail.com', nome: 'Colaborador', periodo: 2, idcargo: 3});
         }
 
         console.log('Registros iniciais criados com sucesso!');

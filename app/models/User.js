@@ -14,6 +14,7 @@ const User = sequelize.define('User', {
         type:INTEGER(7),
         allowNull: false,
         unique : true,
+        primaryKey: true,
         validate: {
             isSevenDigits(value) {
                 if (value.toString().length !== 7) {

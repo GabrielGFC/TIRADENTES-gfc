@@ -2,13 +2,16 @@
 const Caixa = require('../models/Caixa');
 const Familia = require('../models/Familia');
 const Item = require('../models/Item');
+const User = require('../models/User');
 //get
 exports.get = async (req, res) => {
   try {
     const caixa = await Caixa.findAll({
       include: [
       { model: Familia, attributes: ['nome', 'descricao'] },
-      { model: Item, attributes: ['nome', 'quantidade', 'descricao'] }]
+      { model: Item, attributes: ['nome', 'quantidade', 'descricao'] },
+      { model: User, attributes: ['matricula', 'nome', 'idcargo', 'periodo'] }]
+      
     }
     );
     res.json(caixa);
@@ -20,23 +23,16 @@ exports.get = async (req, res) => {
 //post
 exports.register = async (req, res) => {
   const {
-    idCaixa,
     idItem,
     idFamilia,
-    // idColaborador
+    matricula
     } = req.body;
     try {
-      let idCaixaStr = idCaixa.toString()
-
-  if (idCaixa && idCaixaStr.length <= 3)
-  {}
-  else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido' });}
-  
+        
   await Caixa.create({
-    idCaixa,
     idItem,
     idFamilia,
-    // idColaborador
+    matricula
 });
         res.status(201).json({ message: 'Caixa register successfully' });
     } catch (error) {
@@ -48,25 +44,18 @@ exports.register = async (req, res) => {
 exports.update = async (req, res) => {
   const { caixa_id } = req.params;
   const {
-    idCaixa,
     idItem,
     idFamilia,
-    // idColaborador
+    matricula
     } = req.body;
   try {
-    let idCaixaStr = idCaixa.toString()
-
-    if (idCaixa && idCaixaStr.length <= 3)
-    {}
-    else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido' });}
-
+    
      await Caixa.update({ 
-      idCaixa,
       idItem,
       idFamilia,
-      // idColaborador
+      matricula
     }
-      , { where: { id:caixa_id} });
+      , { where: { idCaixa:caixa_id} });
       res.status(200).json({ message: 'Caixa updated successfully' });
   } catch (error) {
       console.error(error);
@@ -78,7 +67,7 @@ exports.update = async (req, res) => {
 exports.delete = async(req,res) => {
 const {caixa_id} = req.params;
 const { } = req.body;
-  try { await Caixa.destroy({ where: { id: caixa_id } });
+  try { await Caixa.destroy({ where: { idCaixa: caixa_id } });
     res.status(202).json({ message: 'Caixa deleted successfully' });}
   catch (error) {
       console.error(error);

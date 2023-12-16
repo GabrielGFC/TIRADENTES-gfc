@@ -2,6 +2,7 @@ const {Sequelize, DataTypes, INTEGER, STRING } = require('sequelize');
 const sequelize = require('../config/database');
 const Familia = require('./Familia');
 const Item = require('./Item');
+const User = require('./User');
 
 const Caixa =sequelize.define('Caixa', {
  
@@ -10,26 +11,21 @@ const Caixa =sequelize.define('Caixa', {
         allowNull:false,
         unique : true,
         primaryKey: true,
-        validate:{
-            isThreeDigits(value) {
-                if (value.toString().length > 3) {
-                    throw new Error('O número da caixa deve ter no máximo 3 dígitos');
-                }
-            }
-        }
+        autoIncrement: true
     },
 })
 
 Caixa.belongsTo(Item,{
-    constraints: true,
     foreignKey: 'idItem'
 })
 
-Familia.hasMany(Caixa,{
-    constraints: true,
+
+Caixa.belongsTo(Familia, {
     foreignKey: 'idFamilia'
 }),
 
-
+Caixa.belongsTo(User,{
+    foreignKey: 'matricula'
+})
 
 module.exports = Caixa;

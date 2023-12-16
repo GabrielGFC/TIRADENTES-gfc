@@ -4,11 +4,12 @@ const User = require('./User');
 const Caixa = require('./Caixa');
 const Estoque = sequelize.define('Estoque', {
 
-     id:{
+     idEstoque:{
          type: DataTypes.INTEGER,
          allowNull: false,
          autoIncrement:true,
-         primaryKey: true},
+         primaryKey: true
+        },
 
     },
     {hooks: {
@@ -25,11 +26,9 @@ const Estoque = sequelize.define('Estoque', {
         }
 })
 
-Caixa.hasMany(Estoque,{
-    constraints: true,
+Estoque.belongsTo(Caixa,{
     foreignKey: 'idCaixa'
 })
-// Get não está funcionando
 
 // Os comentários listados podem ser utilizados futuramente
 

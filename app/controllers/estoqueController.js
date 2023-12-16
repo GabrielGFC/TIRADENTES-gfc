@@ -7,7 +7,7 @@ exports.get = async (req, res) => {
   try {
     const estoque = await Estoque.findAll({
       include: 
-      { model: Caixa, attributes: ['id', 'idFamilia', 'idItem'] },
+      { model: Caixa, attributes: ['idCaixa', 'idFamilia', 'idItem'] },
     });
     res.json(estoque);
   } catch (error) {
@@ -18,19 +18,17 @@ exports.get = async (req, res) => {
 //post
 exports.register = async (req, res) => {
   const {
-    id,
+    idCaixa,
   } = req.body;
 
   try {
-    let 
-    idstr = id.toString()
-
-  if (id && idstr.length <= 3)
+    
+  if (idCaixa && idCaixa.length <= 3)
   {}
   else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido'});}
   
   await Estoque.create({
-    id
+    idCaixa
     });
     res.status(201).json({ message: 'Estoque register successfully'});
   } catch (error) {
@@ -43,21 +41,20 @@ exports.register = async (req, res) => {
 exports.update = async (req, res) => {
   const { estoque_id } = req.params;
   const { 
-   id
+   idCaixa
   } = req.body;
 
-  try {let 
-    idtr = id.toString()
+  try {
 
-  if (id && idstr.length <= 3)
+  if (idCaixa && idCaixa.length <= 3)
   {}
   else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido' });}
 
     await Estoque.update({ 
-    id
+    idCaixa
     },
   
-    { where: { id: estoque_id } });
+    { where: { idEstoque: estoque_id } });
     res.status(200).json({ message: 'Estoques updated successfully' });
 
   } catch (error) {
@@ -70,7 +67,7 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
     const { estoque_id } = req.params;
     try {
-        await Estoque.destroy({ where: { id: estoque_id } });
+        await Estoque.destroy({ where: { idEstoque: estoque_id } });
 
         res.status(200).json({ message: 'Estoques deleted successfully' });
     } catch (error) {

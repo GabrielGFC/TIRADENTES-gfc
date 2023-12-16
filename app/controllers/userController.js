@@ -21,7 +21,7 @@ exports.register = async (req, res) => {
     email,
     nome,
     periodo,
-    idCargo  
+    idcargo  
   } = req.body;
 
   try {
@@ -51,7 +51,7 @@ exports.register = async (req, res) => {
   {}
   else {return res.status(401).json({ message: 'Período não preenchido ou inválido' });}
 
-  if (idCargo && idCargo.length == 1)
+  if (idcargo && idcargo.length == 1)
   {}
   else {return res.status(401).json({ message: 'Cargo não preenchido ou inválido' });}
   
@@ -61,7 +61,7 @@ exports.register = async (req, res) => {
     email,
     nome,
     periodo,
-    idCargo,
+    idcargo,
     });
     res.status(201).json({ message: 'User register successfully'});
   } catch (error) {
@@ -79,7 +79,7 @@ exports.update = async (req, res) => {
     email,
     nome,
     periodo,
-    idCargo  
+    idcargo  
   } = req.body;
 
   try {let 
@@ -107,7 +107,7 @@ exports.update = async (req, res) => {
   {}
   else {return res.status(401).json({ message: 'Período não preenchido ou inválido' });}
 
-  if (idCargo && idCargo.length > 1 && idCargo.length < 128)
+  if (idcargo && idcargo.length >= 1 && idcargo.length <= 128)
   {}
   else {return res.status(401).json({ message: 'Cargo não preenchido ou inválido' });}
 
@@ -117,10 +117,10 @@ exports.update = async (req, res) => {
     email,
     nome,
     periodo,
-    idCargo,
+    idcargo,
     },
   
-    { where: { id: user_id } });
+    { where: { matricula: user_id } });
     res.status(200).json({ message: 'User updated successfully' });
 
   } catch (error) {
@@ -133,7 +133,7 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
     const { user_id } = req.params;
     try {
-        await User.destroy({ where: { id: user_id } });
+        await User.destroy({ where: { matricula: user_id } });
 
         res.status(200).json({ message: 'User deleted successfully' });
     } catch (error) {

@@ -1,14 +1,8 @@
 const {Sequelize, DataTypes, INTEGER, STRING } = require('sequelize');
 const sequelize = require('../config/database');
+const Cargo = require('./Cargo');
 
 const User = sequelize.define('User', {
-
-    // id:{
-    //     type: INTEGER(),
-    //     allowNull: false,
-    //     autoIncrement:true,
-    //     primaryKey: true
-    //     },
     
     matricula:{
         type:INTEGER(7),
@@ -48,17 +42,10 @@ const User = sequelize.define('User', {
                 }
             }
         }},
-    
-    cargo:{
-        type:STRING(1),
-        allowNull:false,
-        validate: {
-            Validating (value) {
-                if (!["1","2","3"].includes(value)) {
-                    throw new Error('Cargo deve ser 1, 2 ou 3')
-                }
-            },len:[1]
-        }}
+ });
+User.belongsTo(Cargo,{
+    constraints: true,
+    foreignKey: 'idCargo'
 });
 
 

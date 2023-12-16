@@ -1,9 +1,9 @@
 //export da biblioteca
-const User = require('../models/Cargo');
+const cargo = require('../models/Cargo');
 //get
 exports.get = async (req, res) => {
   try {
-    const users = await User.findAll();
+    const users = await cargo.findAll();
     res.json(users);
   } catch (error) {
     console.error(error);
@@ -17,7 +17,7 @@ exports.register = async (req, res) => {
             cargo,  
         } = req.body;
 
-        await User.create({   
+        await cargo.create({   
             cargo,
         });
         res.status(201).json({ message: 'familia register successfully' });

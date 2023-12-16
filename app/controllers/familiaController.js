@@ -1,4 +1,4 @@
-const Familia = require('../models/familia.js');
+const familia = require('../models/familia.js');
 
 exports.get = async (req, res) => {
   try {
@@ -6,19 +6,19 @@ exports.get = async (req, res) => {
     res.json(familias);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro servidor.' });
+    res.status(401).json({ error: 'Erro servidor.' });
   }
 }
-
+//post
 exports.register = async (req, res) => {
   const {
-    Nome,
-    Descricao,
+  nome,
+  descricao,
   } = req.body;
   try {
     await familia.create({
-      Nome,
-      Descricao,
+    nome,
+    descricao,
     });
     res.status(201).json({ message: 'familia register successfully' });
   } catch (error) {
@@ -30,14 +30,14 @@ exports.register = async (req, res) => {
 exports.update = async (req, res) => {
     const { familia_id } = req.params;
     const {
-        Nome,
-        Descricao,
+      nome,
+      descricao,
     } = req.body;
     try {
         await familia.update(
         {
-            Nome,
-            Descricao,
+          nome,
+          descricao,
         },
         { where: { id: familia_id } }
         );

@@ -1,32 +1,33 @@
 const { Sequelize, DataTypes, STRING } = require('sequelize');
 const sequelize = require('../config/database');
 
-const User = sequelize.define('cargo', {
+const Cargo = sequelize.define('cargo', {
+
     cargos: {
         type: STRING(11),
         allowNull: false,
-        primaryKey: true,
         unique: true,
     }
 });
 
 sequelize.sync({ force: true })
     .then(() => {
-        return User.create({
+        return Cargo.create({
             cargos: 'admin',
         });
     });
 sequelize.sync({ force: true })
     .then(() => {
-        return User.create({
+        return Cargo.create({
             cargos: 'aluno',
         });
     });
 sequelize.sync({ force: true })
     .then(() => {
-        return User.create({
+        return Cargo.create({
             cargos: 'colaboradores',
         });
+    
     });
 
-module.exports = User;
+module.exports = Cargo;

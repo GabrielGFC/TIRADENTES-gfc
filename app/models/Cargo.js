@@ -8,7 +8,6 @@ const Cargo = sequelize.define('cargo', {
     cargos: {
         type: STRING(11),
         allowNull: false,
-        primaryKey: true,
         unique: true,
     }
 });

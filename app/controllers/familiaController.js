@@ -6,10 +6,10 @@ exports.get = async (req, res) => {
     res.json(familia);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro servidor.' });
+    res.status(401).json({ error: 'Erro servidor.' });
   }
 }
-
+//post
 exports.register = async (req, res) => {
   const {
     nome,

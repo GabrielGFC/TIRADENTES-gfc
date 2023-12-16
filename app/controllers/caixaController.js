@@ -72,5 +72,5 @@ const { } = req.body;
   catch (error) {
       console.error(error);
       res.status(501).json({ message: 'Internal server error' });
-  }
-}
+    }
+  }; // Add a closing curly brace here

@@ -15,13 +15,13 @@ exports.get = async (req, res) => {
 exports.register = async (req, res) => {
   const {
     nome,
+    quantidade,
     descricao,
-    quantidade  
   } = req.body;
 
   try {
-    let 
-    quantidadeStr = quantidade.toString()
+    let
+    quantidadeStr = quantidade.toString();
 
   if (nome && nome.length > 1 && nome.length < 128)
   {}
@@ -37,8 +37,8 @@ exports.register = async (req, res) => {
   
   await Item.create({
     nome,
+    quantidade,
     descricao,
-    quantidade
     });
     res.status(201).json({ message: 'Item register successfully'});
   } catch (error) {
@@ -52,12 +52,12 @@ exports.update = async (req, res) => {
   const { item_id } = req.params;
   const { 
     nome,
+    quantidade,
     descricao,
-    quantidade
   } = req.body;
 
-  try {let 
-    quantidadeStr = quantidade.toString()
+  try {
+    const quantidadeStr = quantidade.toString();
 
     if (nome && nome.length > 1 && nome.length < 128)
     {}
@@ -72,12 +72,12 @@ exports.update = async (req, res) => {
     else {return res.status(401).json({ message: 'Descrição não preenchida ou inválida' });}
 
     await Item.update({ 
-      nome,
-      descricao,
-      quantidade
+    nome,
+    quantidade,
+    descricao,
     },
   
-    { where: { id: item_id } });
+    { where: { idItem: item_id } });
     res.status(200).json({ message: 'Item updated successfully' });
 
   } catch (error) {
@@ -90,7 +90,7 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
     const { item_id } = req.params;
     try {
-        await Item.destroy({ where: { id: item_id } });
+        await Item.destroy({ where: { idItem: item_id } });
 
         res.status(200).json({ message: 'Item deleted successfully' });
     } catch (error) {

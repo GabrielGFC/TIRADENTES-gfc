@@ -10,7 +10,7 @@ exports.get = async (req, res) => {
   try {
     const users = await User.findAll(
       {include: [
-        { model: Cargo, attributes: ['cargos'] }]
+        { model: Cargo, attributes: ['cargo'] }]
       }
     );
     res.json(users);
@@ -28,7 +28,7 @@ exports.register = async (req, res) => {
     email,
     nome,
     periodo,
-    idcargo  
+    idCargo  
   } = req.body;
 
   try {
@@ -66,9 +66,6 @@ exports.register = async (req, res) => {
       return res.status(401).json({ message: 'Período não preenchido ou inválido' });
     }
 
-  if (idcargo && idcargo.length == 1)
-  {}
-  else {return res.status(401).json({ message: 'Cargo não preenchido ou inválido' });}
   
   await User.create({   
     matricula,
@@ -76,7 +73,7 @@ exports.register = async (req, res) => {
     email,
     nome,
     periodo,
-    idcargo,
+    idCargo,
     });
     res.status(201).json({ message: 'User register successfully' });
   } catch (error) {
@@ -94,7 +91,7 @@ exports.update = async (req, res) => {
     email,
     nome,
     periodo,
-    idcargo  
+    idCargo  
   } = req.body;
 
   try {
@@ -131,18 +128,13 @@ exports.update = async (req, res) => {
       return res.status(401).json({ message: 'Período não preenchido ou inválido' });
     }
 
-    if (idCargo && idcargo.length > 1) {
-    } else {
-      return res.status(401).json({ message: 'Cargo não preenchido ou inválido' });
-    }
-
     await User.update({
     matricula,
     senha: hashedSenha,
     email,
     nome,
     periodo,
-    idcargo,
+    idCargo,
     },
   
     { where: { matricula: user_id } });

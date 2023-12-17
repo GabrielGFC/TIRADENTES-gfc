@@ -1,10 +1,10 @@
 //export da biblioteca
-const cargo = require('../models/Cargo');
+const Cargo = require('../models/Cargo');
 //get
 exports.get = async (req, res) => {
   try {
-    const users = await cargo.findAll();
-    res.json(users);
+    const cargo = await Cargo.findAll();
+    res.json(cargo);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erro ao buscar usuários.' });
@@ -17,10 +17,10 @@ exports.register = async (req, res) => {
             cargo,  
         } = req.body;
 
-        await cargo.create({   
+        await Cargo.create({   
             cargo,
         });
-        res.status(201).json({ message: 'familia register successfully' });
+        res.status(201).json({ message: 'Cargo register successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });

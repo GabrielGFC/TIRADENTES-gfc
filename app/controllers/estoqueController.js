@@ -22,8 +22,10 @@ exports.register = async (req, res) => {
   } = req.body;
 
   try {
+    let
+    idCaixaStr = idCaixa.toString();
     
-  if (idCaixa && idCaixa.length <= 3)
+  if (idCaixa && idCaixaStr.length <= 3)
   {}
   else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido'});}
   
@@ -45,8 +47,10 @@ exports.update = async (req, res) => {
   } = req.body;
 
   try {
-
-  if (idCaixa && idCaixa.length <= 3)
+    let
+    idCaixaStr = idCaixa.toString();
+    
+  if (idCaixa && idCaixaStr.length <= 3)
   {}
   else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido' });}
 

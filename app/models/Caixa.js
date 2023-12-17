@@ -1,31 +1,29 @@
-const {Sequelize, DataTypes, INTEGER, STRING } = require('sequelize');
+const { Sequelize, DataTypes, INTEGER } = require('sequelize');
 const sequelize = require('../config/database');
-const Familia = require('./Familia');
 const Item = require('./Item');
+const Familia = require('./Familia');
 const User = require('./User');
 
-const Caixa =sequelize.define('Caixa', {
- 
-    idCaixa:{
-        type: INTEGER(3),//Formato xxx
-        allowNull:false,
-        unique : true,
+const Caixa = sequelize.define('Caixa', {
+    idCaixa: {
+        type: INTEGER(3),
+        allowNull: false,
+        unique: true,
+        autoIncrement: true,
         primaryKey: true,
-        autoIncrement: true
     },
-})
+});
 
-Caixa.belongsTo(Item,{
-    foreignKey: 'idItem'
-})
-
+Caixa.belongsTo(Item, {
+    foreignKey: 'idItem',
+});
 
 Caixa.belongsTo(Familia, {
-    foreignKey: 'idFamilia'
-}),
+    foreignKey: 'idFamilia',
+});
 
-Caixa.belongsTo(User,{
-    foreignKey: 'matricula'
-})
+Caixa.belongsTo(User, {
+    foreignKey: 'matricula',
+});
 
 module.exports = Caixa;

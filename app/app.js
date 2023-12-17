@@ -27,14 +27,14 @@ app.use(session({ secret: 'your-secret-key',
 resave: false,
 saveUninitialized: false }));
 
-app.use('/auth', authRoutes);
+app.use('/auth',  authRoutes);
 app.use('/user', userRoutes);
-app.use('/estoque', estoqueRoutes);
-app.use('/item', itemRoutes);
-app.use('/caixa', caixaRoutes);
-app.use('/cargo',cargoRoutes);
-app.use('/familia',familiaRoutes)
-app.use('/pedido',pedidoRoutes)
+app.use('/estoque', isAuthenticated, estoqueRoutes);
+app.use('/item', isAuthenticated, itemRoutes);
+app.use('/caixa',isAuthenticated, caixaRoutes);
+app.use('/cargo',isAuthenticated, cargoRoutes);
+app.use('/familia',isAuthenticated,familiaRoutes)
+app.use('/pedido',isAuthenticated, pedidoRoutes)
 
 sequelize
   .sync()

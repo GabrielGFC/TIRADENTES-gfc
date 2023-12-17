@@ -10,7 +10,7 @@ exports.get = async (req, res) => {
       include: [
       { model: Familia, attributes: ['nome', 'descricao'] },
       { model: Item, attributes: ['nome', 'quantidade', 'descricao'] },
-      { model: User, attributes: ['matricula', 'nome', 'idcargo', 'periodo'] }]
+      { model: User, attributes: ['matricula', 'nome', 'idCargo', 'periodo'] }]
       
     }
     );
@@ -73,4 +73,4 @@ const { } = req.body;
       console.error(error);
       res.status(501).json({ message: 'Internal server error' });
     }
-  }; // Add a closing curly brace here
+  };

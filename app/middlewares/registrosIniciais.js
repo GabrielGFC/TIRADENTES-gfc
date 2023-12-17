@@ -6,54 +6,62 @@ const User = require('../models/User');
 const Caixa = require('../models/Caixa');
 const Pedido = require('../models/Pedido');
 const Estoque = require('../models/Estoque');
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+const salt = bcrypt.genSaltSync(saltRounds);
+
+
 const registrosIniciais = async () => {
     try {
         // Sincroniza o banco de dados sem forçar a recriação do esquema
         await sequelize.sync();
 
         // Verifica se os registros já existem
-        const adminCargo = await Cargo.findOne({ where: { cargos: 'admin' } });
-        const alunoCargo = await Cargo.findOne({ where: { cargos: 'aluno' } });
-        const colaboradoresCargo = await Cargo.findOne({ where: { cargos: 'colaboradores' } });
+        const adminCargo = await Cargo.findOne({ where: { cargo: 'admin' } });
+        const alunoCargo = await Cargo.findOne({ where: { cargo: 'aluno' } });
+        const colaboradoresCargo = await Cargo.findOne({ where: { cargo: 'colaboradores' } });
         const adminLogin = await User.findOne({ where: { matricula: 1010101, } });
         const alunoLogin = await User.findOne({ where: { matricula: 7654321 } });
         const colaboradorLogin = await User.findOne({ where: { matricula: 1234567} });
-        const item = await Item.findOne({ where: { id: 1 } });
-        const familia = await Familia.findOne({ where: { id: 1 } });
+        const item = await Item.findOne({ where: { idItem: 1 } });
+        const familia = await Familia.findOne({ where: { idFamilia: 1 } });
         const caixa = await Caixa.findOne({ where: { idCaixa: 1 } });
         const pedido = await Pedido.findOne({ where: { idPedido: 1 } });
         const estoque = await Estoque.findOne({ where: { idEstoque: 1 } });
         // Cria registros se não existirem
         if (!adminCargo) {
-            await Cargo.create({ cargos: 'admin' });
+            await Cargo.create({ cargo: 'admin' });
         }
 
         if (!alunoCargo) {
-            await Cargo.create({ cargos: 'aluno' });
+            await Cargo.create({ cargo: 'aluno' });
         }
 
         if (!colaboradoresCargo) {
-            await Cargo.create({ cargos: 'colaboradores' });
+            await Cargo.create({ cargo: 'colaboradores' });
         }
 
         if (!item) {
-            await Item.create({ id: 1, nome: 'Bisturi', quantidade: 2, descricao: 'O bisturi é uma ferramenta cirúrgica de lâmina afiada e pontiaguda, utilizada para realizar incisões precisas em tecidos durante procedimentos cirúrgicos' });
+            await Item.create({ idItem: 1, nome: 'Bisturi', quantidade: 2, descricao: 'O bisturi é uma ferramenta cirúrgica de lâmina afiada e pontiaguda, utilizada para realizar incisões precisas em tecidos durante procedimentos cirúrgicos' });
         }
 
         if (!familia) {
-            await Familia.create({ id: 1, nome: 'Cirúrgica', descricao: 'Itens usados para cirurgia'});
+            await Familia.create({ idFamilia: 1, nome: 'Cirúrgica', descricao: 'Itens usados para cirurgia'});
         }
        
         if (!adminLogin) {
-            await User.create({ matricula: 1010101, senha: 'admin', email: 'admin@gmail.com', nome: 'Admin', periodo: 0, idcargo: 1 });
+            const hashedAdminSenha = bcrypt.hashSync('admin', salt)
+            await User.create({ matricula: 1010101, senha: hashedAdminSenha, email: 'admin@gmail.com', nome: 'Admin', periodo: 0, idCargo: 1 });
         }
 
         if (!alunoLogin) {
-            await User.create({ matricula: 7654321, senha: 'aluno', email: 'aluno@gmail.com', nome: 'Aluno', periodo: 1, idcargo: 2 });
+            const hashedAlunoSenha = bcrypt.hashSync('aluno', salt)
+            await User.create({ matricula: 7654321, senha: hashedAlunoSenha, email: 'aluno@gmail.com', nome: 'Aluno', periodo: 1, idCargo: 2 });
         }
 
         if (!colaboradorLogin) {
-            await User.create({ matricula: 1234567, senha: 'colaborador', email: 'colaborador@gmail.com', nome: 'Colaborador', periodo: 2, idcargo: 3});
+            const hashedColabSenha = bcrypt.hashSync('colaborador', salt)
+            await User.create({ matricula: 1234567, senha: hashedColabSenha, email: 'colaborador@gmail.com', nome: 'Colaborador', periodo: 2, idCargo: 3});
         }
 
         if (!caixa) {

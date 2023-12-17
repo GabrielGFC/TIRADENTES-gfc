@@ -39,7 +39,7 @@ exports.update = async (req, res) => {
             nome,
             descricao,
         },
-        { where: { id: familia_id } }
+        { where: { idFamilia: familia_id } }
         );
         res.status(200).json({ message: 'familia updated successfully' });
     } catch (error) {
@@ -51,7 +51,7 @@ exports.update = async (req, res) => {
     exports.delete = async (req, res) => {
         const { familia_id } = req.params;
         try {
-            await Familia.destroy({ where: { id: familia_id } });
+            await Familia.destroy({ where: { idFamilia: familia_id } });
             res.status(200).json({ message: 'familia deleted successfully' });
         } catch (error) {
             console.error(error);

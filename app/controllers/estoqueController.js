@@ -1,10 +1,14 @@
 //export da biblioteca
+const Caixa = require('../models/Caixa');
 const Estoque = require('../models/Estoque');
 
 //get
 exports.get = async (req, res) => {
   try {
-    const estoque = await Estoque.findAll();
+    const estoque = await Estoque.findAll({
+      include: 
+      { model: Caixa, attributes: ['idCaixa', 'idFamilia', 'idItem'] },
+    });
     res.json(estoque);
   } catch (error) {
     console.error(error);
@@ -14,56 +18,17 @@ exports.get = async (req, res) => {
 //post
 exports.register = async (req, res) => {
   const {
-    numeroCaixa,
-    quantidade,
-    dataEntrada,
-    dataMovimentacao,
-    dataSaida,
-    familia,
-    colaborador  
+    idCaixa,
   } = req.body;
 
   try {
-    let 
-    numeroCaixaStr = numeroCaixa.toString()
-    quantidadeStr = quantidade.toString()
-
-  if (numeroCaixa && numeroCaixaStr.length <= 3)
+    
+  if (idCaixa && idCaixa.length <= 3)
   {}
-  else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido', numeroCaixaStr });}
-  
-  if(quantidade && quantidadeStr.length <= 3)
-  {}
-  else {return res.status(401).json({ message: 'Quantidade não preenchida ou inválida'});;}
-  
-  if (dataEntrada && dataEntrada.length <= 50)
-  {}
-  else {return res.status(401).json({ message: 'Data de entrada não preenchida ou inválida' });}
-  
-  if (dataMovimentacao && dataMovimentacao.length <= 50)
-  {}
-  else {return res.status(401).json({ message: 'Data de movimentação não preenchida ou inválida' });}
-
-  if (dataSaida && dataSaida.length <= 50 )
-  {}
-  else {return res.status(401).json({ message: 'Data de saída não preenchida ou inválida' });}
-
-  if (familia && familia.length > 1 && familia.length < 128)
-  {}
-  else {return res.status(401).json({ message: 'Família não preenchida ou inválida' });}
-
-  if (colaborador && colaborador.length > 1 && colaborador.length < 128)
-  {}
-  else {return res.status(401).json({ message: 'Colaborador não preenchido ou inválido' });}
+  else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido'});}
   
   await Estoque.create({
-    numeroCaixa,
-    quantidade,
-    dataEntrada,
-    dataMovimentacao,
-    dataSaida,
-    familia,
-    colaborador
+    idCaixa
     });
     res.status(201).json({ message: 'Estoque register successfully'});
   } catch (error) {
@@ -76,58 +41,20 @@ exports.register = async (req, res) => {
 exports.update = async (req, res) => {
   const { estoque_id } = req.params;
   const { 
-    numeroCaixa,
-    quantidade,
-    dataEntrada,
-    dataMovimentacao,
-    dataSaida,
-    familia,
-    colaborador
+   idCaixa
   } = req.body;
 
-  try {let 
-    numeroCaixaStr = numeroCaixa.toString()
-    quantidadeStr = quantidade.toString()
+  try {
 
-  if (numeroCaixa && numeroCaixaStr.length <= 3)
+  if (idCaixa && idCaixa.length <= 3)
   {}
-  else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido', numeroCaixaStr });}
-  
-  if(quantidade && quantidadeStr.length <= 3)
-  {}
-  else {return res.status(401).json({ message: 'Quantidade não preenchida ou inválida'});;}
-  
-  if (dataEntrada && dataEntrada.length <= 50)
-  {}
-  else {return res.status(401).json({ message: 'Data de entrada não preenchida ou inválida' });}
-  
-  if (dataMovimentacao && dataMovimentacao.length <= 50)
-  {}
-  else {return res.status(401).json({ message: 'Data de movimentação não preenchida ou inválida' });}
-
-  if (dataSaida && dataSaida.length <= 50 )
-  {}
-  else {return res.status(401).json({ message: 'Data de saída não preenchida ou inválida' });}
-
-  if (familia && familia.length > 1 && familia.length < 128)
-  {}
-  else {return res.status(401).json({ message: 'Família não preenchida ou inválida' });}
-
-  if (colaborador && colaborador.length >= 1 && colaborador.length < 128)
-  {}
-  else {return res.status(401).json({ message: 'Colaborador não preenchido ou inválido' });}
+  else {return res.status(401).json({ message: 'Número da caixa não preenchido ou inválido' });}
 
     await Estoque.update({ 
-    numeroCaixa,
-    quantidade,
-    dataEntrada,
-    dataMovimentacao,
-    dataSaida,
-    familia,
-    colaborador
+    idCaixa
     },
   
-    { where: { id: estoque_id } });
+    { where: { idEstoque: estoque_id } });
     res.status(200).json({ message: 'Estoques updated successfully' });
 
   } catch (error) {
@@ -140,7 +67,7 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
     const { estoque_id } = req.params;
     try {
-        await Estoque.destroy({ where: { id: estoque_id } });
+        await Estoque.destroy({ where: { idEstoque: estoque_id } });
 
         res.status(200).json({ message: 'Estoques deleted successfully' });
     } catch (error) {

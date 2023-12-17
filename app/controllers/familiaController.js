@@ -1,9 +1,9 @@
-const familia = require('../models/familia.js');
+const Familia = require('../models/Familia.js');
 
 exports.get = async (req, res) => {
   try {
-    const familias = await familia.findAll();
-    res.json(familias);
+    const familia = await Familia.findAll();
+    res.json(familia);
   } catch (error) {
     console.error(error);
     res.status(401).json({ error: 'Erro servidor.' });
@@ -12,13 +12,13 @@ exports.get = async (req, res) => {
 //post
 exports.register = async (req, res) => {
   const {
-  nome,
-  descricao,
-  } = req.body;
-  try {
-    await familia.create({
     nome,
     descricao,
+  } = req.body;
+  try {
+    await Familia.create({
+      nome,
+      descricao,
     });
     res.status(201).json({ message: 'familia register successfully' });
   } catch (error) {
@@ -30,14 +30,14 @@ exports.register = async (req, res) => {
 exports.update = async (req, res) => {
     const { familia_id } = req.params;
     const {
-      nome,
-      descricao,
+        nome,
+        descricao,
     } = req.body;
     try {
-        await familia.update(
+        await Familia.update(
         {
-          nome,
-          descricao,
+            nome,
+            descricao,
         },
         { where: { id: familia_id } }
         );
@@ -51,7 +51,7 @@ exports.update = async (req, res) => {
     exports.delete = async (req, res) => {
         const { familia_id } = req.params;
         try {
-            await familia.destroy({ where: { id: familia_id } });
+            await Familia.destroy({ where: { id: familia_id } });
             res.status(200).json({ message: 'familia deleted successfully' });
         } catch (error) {
             console.error(error);

@@ -28,7 +28,7 @@ exports.register = async (req, res) => {
     email,
     nome,
     periodo,
-    idCargo
+    idcargo  
   } = req.body;
 
   try {
@@ -66,19 +66,17 @@ exports.register = async (req, res) => {
       return res.status(401).json({ message: 'Período não preenchido ou inválido' });
     }
 
-    if (idCargo && idCargo.length == 2) {
-      // code here
-    } else {
-      return res.status(401).json({ message: 'Cargo não preenchido ou inválido' });
-    }
-
-    await User.create({
-      matricula,
-      senha: hashedSenha,
-      email,
-      nome,
-      periodo,
-      idCargo
+  if (idcargo && idcargo.length == 1)
+  {}
+  else {return res.status(401).json({ message: 'Cargo não preenchido ou inválido' });}
+  
+  await User.create({   
+    matricula,
+    senha: hashedSenha,
+    email,
+    nome,
+    periodo,
+    idcargo,
     });
     res.status(201).json({ message: 'User register successfully' });
   } catch (error) {
@@ -96,7 +94,7 @@ exports.update = async (req, res) => {
     email,
     nome,
     periodo,
-    idCargo
+    idcargo  
   } = req.body;
 
   try {
@@ -129,31 +127,27 @@ exports.update = async (req, res) => {
     }
 
     if (periodo && periodoStr.length < 2) {
-      // code here
     } else {
       return res.status(401).json({ message: 'Período não preenchido ou inválido' });
     }
 
-    if (idCargo && idCargo.length > 1) {
-      // code here
+    if (idCargo && idcargo.length > 1) {
     } else {
       return res.status(401).json({ message: 'Cargo não preenchido ou inválido' });
     }
 
-    try {
-      await User.update({
-        matricula,
-        senha: hashedSenha,
-        email,
-        nome,
-        periodo,
-        idCargo
-      }, { where: { id: user_id } });
-      res.status(200).json({ message: 'User updated successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
+    await User.update({
+    matricula,
+    senha: hashedSenha,
+    email,
+    nome,
+    periodo,
+    idcargo,
+    },
+  
+    { where: { matricula: user_id } });
+    res.status(200).json({ message: 'User updated successfully' });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
@@ -162,12 +156,13 @@ exports.update = async (req, res) => {
 
 //delete
 exports.delete = async (req, res) => {
-  const { user_id } = req.params;
-  try {
-    await User.destroy({ where: { id: user_id } });
-    res.status(200).json({ message: 'User deleted successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
+    const { user_id } = req.params;
+    try {
+        await User.destroy({ where: { matricula: user_id } });
+
+        res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 };
